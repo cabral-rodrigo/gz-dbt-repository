@@ -16,12 +16,21 @@ sources:
 
       - name: sales
         identifier: raw_gz_sales
-        description: sales for Greenweez
+        description: sales for Greenweez      
         tests:
           - unique:
               column_name: "(orders_id || '-' || pdt_id)"
           - not_null: 
               column_name: "(orders_id || '-' || pdt_id)"
+        loaded_at_field: "CAST(date_date AS TIMESTAMP)"
+        freshness: 
+          warn_after:
+            count: 90
+            period: day
+        columns:
+          - name: date_date
+            description: date of purchase
+        
       - name: ship
         identifier: raw_gz_ship
         description: all ships for Greenweez
