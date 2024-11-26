@@ -40,3 +40,170 @@ sources:
           - not_null: 
               column_name: orders_id
 
+models:
+
+  # intermediate #
+
+  - name: int_orders_margin
+    description: orders margin by orders grouped by date
+    columns:
+      - name: orders_id
+        description: order ir number
+        tests:
+          - not_null
+          - unique
+      - name: date_date
+        description: date of sale
+        tests:
+          - not_null
+      - name: revenue
+        description: total revenue of an order
+        tests:
+          - not_null              
+      - name: quantity
+        description: quantity of products sold
+        tests:
+          - not_null
+      - name: purchase_cost
+        description: purchase cost of products
+        tests:
+          - not_null
+      - name: margin
+        description: margin of the order
+        tests:
+          - not_null
+
+  - name: int_orders_operational
+    description: orders margin operational by orders grouped by date
+    columns:
+      - name: orders_id
+        description: order ir number
+        tests:
+          - not_null
+          - unique
+      - name: date_date
+        description: date of sale
+        tests:
+          - not_null
+      - name: revenue
+        description: total revenue of an order
+        tests:
+          - not_null              
+      - name: quantity
+        description: quantity of products sold
+        tests:
+          - not_null
+      - name: purchase_cost
+        description: purchase cost of products
+        tests:
+          - not_null
+      - name: margin
+        description: margin of the order
+        tests:
+          - not_null
+      - name: operational_margin
+        description: operational margin of the order margin + shipping_fee - log cost - ship cost
+        tests:
+          - not_null
+      - name: shipping_fee
+        description: shipping fee paid by costumer
+        tests:
+          - not_null
+      - name: logcost
+        description: logistic costs incurred for delivering the order
+        tests:
+          - not_null
+      - name: ship_cost
+        description: ship cost incurred for delivering the order
+        tests:
+          - not_null
+
+  - name: int_sales_margin
+    description: detailed order information
+    columns:
+      - name: products_id
+        description: product id number of an order
+        tests:
+          - not_null
+      - name: orders_id
+        description: order id number of the product sale
+        tests:
+          - not_null
+      - name: date_date
+        description: date of sale of the product and order
+        tests:
+          - not_null
+      - name: revenue
+        description: total revenue of an order
+        tests:
+          - not_null              
+      - name: quantity
+        description: quantity of products sold
+        tests:
+          - not_null
+      - name: purchase_price
+        description: unit purchase price
+        tests:
+          - not_null
+      - name: purchase_cost
+        description: purchase cost of total different products sold by order
+        tests:
+          - not_null
+      - name: margin
+        description: margin of the order
+        tests:
+          - not_null
+    tests:
+      - unique:
+          column_name: "(orders_id || '-' || products_id)"
+
+  # staging #
+
+  - name: finance_days
+    description: daily sales report
+    columns:
+      - name: date_date
+        description: date of sale
+        tests:
+          - not_null
+      - name: nb_transactions
+        description: total transactions by date
+        tests:
+          - not_null
+      - name: revenue
+        description: total revenue for the day
+        tests:
+          - not_null 
+      - name: average_basket
+        description: average basket revenue per day
+        tests:
+          - not_null              
+      - name: margin
+        description: margin of the order
+        tests:
+          - not_null
+      - name: total_operational_margin
+        description: operational margin of the order margin + shipping_fee - log cost - ship cost for the day
+        tests:
+          - not_null
+      - name: total_purchase_costs
+        description: purchase cost of products per day
+        tests:
+          - not_null
+      - name: total_shipping_fees
+        description: shipping fee paid by costumer per day
+        tests:
+          - not_null
+      - name: total_log_costs
+        description: logistic costs incurred for delivering the orders in that date
+        tests:
+          - not_null
+      - name: total_ship_costs
+        description: ship cost incurred for delivering the orders in that date
+        tests:
+          - not_null
+      - name: total_quantity_of_products_sold
+        description: quantity of products sold by day
+        tests:
+          - not_null
+

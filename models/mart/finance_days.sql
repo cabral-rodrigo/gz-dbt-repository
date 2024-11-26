@@ -2,7 +2,7 @@ select
     date_date,
     count(orders_id) as nb_transactions,
     round(sum(revenue),2) as revenue,
-    round(avg(revenue),2) as averare_basket,
+    round(avg(revenue),2) as average_basket,
     round(sum(margin),2) as margin,
     round(sum(operational_margin),2) as total_operational_margin,
     round(sum(purchase_cost),2) as total_purchase_costs,
